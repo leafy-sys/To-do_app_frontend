@@ -71,17 +71,25 @@ async function addTask(description) {
     }
 }
 
-
 async function toggleTaskCompletion(taskId, isCompleted) {
     try {
+        // Fetch the current task first to get its description
+        const taskResponse = await fetch(`${apiUrl}/tasks/${taskId}`);
+        const task = await taskResponse.json();
+
+        // Send the updated task with the current description and updated is_completed status
         await fetch(`${apiUrl}/tasks/${taskId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ is_completed: isCompleted })
+            body: JSON.stringify({
+                description: task.description, // Keep the description the same
+                is_completed: isCompleted // Update the completion status
+            })
         });
-        fetchTasks();
+
+        fetchTasks(); // Refresh the task list
     } catch (error) {
         console.error('Error updating task:', error);
     }
