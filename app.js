@@ -1,4 +1,4 @@
-const apiUrl = 'http:techsbible.com'; // Replace with your server's IP and port
+const apiUrl = 'http://techsbible.com'; // Replace with your server's IP and port
 
 async function fetchTasks() {
     try {
